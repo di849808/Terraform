@@ -22,3 +22,4 @@ resource "azurerm_storage_account" "tamopssa" {
   location                 = azurerm_resource_group.tamopsrg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+}
