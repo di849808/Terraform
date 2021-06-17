@@ -9,19 +9,19 @@ terraform {
   backend "azurerm" {}
 }
 resource "azurerm_resource_group" "example" {
-  name     = "example-resources"
+  name     = "example-resources-1"
   location = "West Europe"
 }
 
 resource "azurerm_virtual_network" "example" {
-  name                = "example-network"
+  name                = "example-network-1"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
 }
 
 resource "azurerm_subnet" "example" {
-  name                 = "internal"
+  name                 = "internal-1"
   resource_group_name  = azurerm_resource_group.example.name
   virtual_network_name = azurerm_virtual_network.example.name
   address_prefix     = "10.0.2.0/24"
