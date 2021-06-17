@@ -8,18 +8,22 @@ provider "azurerm" {
 terraform {
   backend "azurerm" {}
 }
- 
-data "azurerm_client_config" "current" {}
- 
-resource "azurerm_resource_group" "tamopsrg" {
-  name     = "tamops-tf"
-  location = "eastus2"
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "West Europe"
 }
- 
-resource "azurerm_storage_account" "tamopssa" {
-  name                     = "tamopssatf"
-  resource_group_name      = azurerm_resource_group.tamopsrg.name
-  location                 = azurerm_resource_group.tamopsrg.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+
+resource "azurerm_virtual_network" "example" {
+  name                = "example-network"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
 }
+
+resource "azurerm_subnet" "example" {
+  name                 = "internal"
+  resource_group_name  = azurerm_resource_group.example.name
+  virtual_network_name = azurerm_virtual_network.example.name
+  address_prefix     = "10.0.2.0/24"
+}
+
